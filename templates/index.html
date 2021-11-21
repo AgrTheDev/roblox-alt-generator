@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Roblox Alt Gen</title>
   </head>
   <body>
@@ -40,8 +41,11 @@
 
     <script>
       function launchGame() {
-        cookieInput = document.getElementById("cookieInput").value;
-        gameIdInput = document.getElementById("gameIdInput").value;
+        cookieInput = document.getElementById("cookieInput").value || false;
+        gameIdInput = document.getElementById("gameIdInput").value || false;
+        if (!cookieInput || !gameIdInput) {
+          return Swal.fire("Error", "You must provide a cookie and a game ID!", "error");
+        }
         fetch(`./authTicket?cookie=${cookieInput}&gameid=${gameIdInput}`, {
           method: "POST",
         })

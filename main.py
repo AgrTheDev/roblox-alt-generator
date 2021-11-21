@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
-import requests, random
+import requests, random, json
 from waitress import serve
+
+statusFile = open('status.json', 'r')
+debug = json.load(statusFile)['debug']
 
 app = Flask(__name__, template_folder="templates")
 
@@ -20,4 +23,8 @@ def authTicket():
         return f'roblox-player:1+launchmode:play+gameinfo:{xsrf_token}+launchtime:{browserId}+placelauncherurl:https%3A%2F%2Fassetgame.roblox.com%2Fgame%2FPlaceLauncher.ashx%3Frequest%3DRequestGame%26browserTrackerId%3D{browserId}%26placeId%3D{gameid}%26isPlayTogetherGame%3Dfalse+browsertrackerid:{browserId}+robloxLocale:en_us+gameLocale:en_us+channel:'
 
 if __name__ == '__main__':
+  if debug:
+    app.debug = True
+    app.run()
+  else:
     serve(app, host="0.0.0.0", port=8080)
