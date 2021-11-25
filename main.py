@@ -25,6 +25,6 @@ def authTicket():
 if __name__ == '__main__':
   if debug:
     app.debug = True
-    app.run()
+    app.run(port=5500)
   else:
     serve(app, host="0.0.0.0", port=8080)
